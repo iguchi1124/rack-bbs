@@ -28,7 +28,7 @@ class Application
   private
 
   def mysql_client
-    @mysql_client ||= ::Mysql2::Client.new(hosqt: 'localhost', username: 'root', database: 'rack_bbs')
+    @mysql_client ||= ::Mysql2::Client.new(hosqt: 'localhost', username: 'root', database: 'bbs')
   end
 
   def not_found

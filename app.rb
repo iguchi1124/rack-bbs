@@ -48,5 +48,3 @@ class Application
     @body = [ERB.new(File.read('templates/comments.erb')).result(binding)]
   end
 end
-
-Rack::Handler::WEBrick.run Application.new

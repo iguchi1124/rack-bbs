@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>rack bbs</title>
+</head>
+<body>
+  <% comments.each do |comment| %>
+      <div>
+        <p>id: <%= comment['id'] %></p>
+        <p><%= comment['content'] %></p>
+      </div>
+  <% end %>
+
+  <div>
+    <form method="post">
+      <input type="text" name="content"></input>
+      <button type="submit">送信</button>
+    </form>
+  </div>
+</body>
+</html>

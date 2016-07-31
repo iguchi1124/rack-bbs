@@ -11,7 +11,6 @@ class Application
 
   def call(env)
     @request = Rack::Request.new(env)
-    @headers['Content-Type'] = 'text/html'
 
     case [@request.request_method, @request.path]
     when ['GET', '/comments']
@@ -37,14 +36,17 @@ class Application
 
   def get_comments
     comments = mysql_client.query 'SELECT * FROM comments;'
+
+    @headers['Content-Type'] = 'text/html'
     @body = [ERB.new(File.read('templates/comments.erb')).result(binding)]
   end
 
   def create_comments
-    escaped_content = mysql_client.escape(@request.params['content'])
-    mysql_client.query "INSERT INTO comments (content) VALUES ('#{escaped_content}');"
-
+    statement = mysql_client.prepare "INSERT INTO comments (content) VALUES (?);"
+    statement.execute(@request.params['content'])
     comments = mysql_client.query 'SELECT * FROM comments;'
+
+    @headers['Content-Type'] = 'text/html'
     @body = [ERB.new(File.read('templates/comments.erb')).result(binding)]
   end
 end
